@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant C as Client
+  participant A as API
+  participant S as Service
+  C->>A: Request
+  A->>S: Validate + Process
+  S-->>A: Result
+  A-->>C: Response

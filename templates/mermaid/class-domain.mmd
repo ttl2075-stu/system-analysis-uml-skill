@@ -1,0 +1,9 @@
+classDiagram
+  class EntityA {
+    +id: UUID
+    +name: string
+  }
+  class EntityB {
+    +id: UUID
+  }
+  EntityA "1" --> "*" EntityB : has
