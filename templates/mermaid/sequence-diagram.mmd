@@ -1,0 +1,43 @@
+%% Sequence Diagram - Mermaid sequenceDiagram
+%% Convention:
+%%   - actor: external entity
+%%   - participant: object/component
+%%   - ->>: sync message
+%%   - -->>: return message
+%%   - alt/else/end: alternative
+%%   - opt: optional
+%%   - loop: loop
+%%   - par: parallel
+%%   - Note: annotations
+
+sequenceDiagram
+  actor User
+  participant UI as User Interface
+  participant Ctrl as Controller
+  participant Svc as BusinessService
+  participant Repo as Repository
+  participant DB as Database
+
+  User->>UI: action
+  UI->>Ctrl: request(params)
+  Ctrl->>Svc: process(params)
+  Svc->>Repo: lookup(id)
+  Repo->>DB: SELECT ...
+  DB-->>Repo: row
+  Repo-->>Svc: Entity
+
+  alt valid case
+    Svc->>Repo: save(entity)
+    Repo->>DB: INSERT/UPDATE
+    DB-->>Repo: ok
+    Repo-->>Svc: success
+    Svc-->>Ctrl: result
+    Ctrl-->>UI: 200 OK + data
+    UI-->>User: success message
+  else invalid case
+    Svc-->>Ctrl: error(reason)
+    Ctrl-->>UI: 4xx + error
+    UI-->>User: error message
+  end
+
+  Note over Svc,Repo: Service orchestrates<br/>business rules

@@ -1,4 +1,28 @@
+%% State Machine - Mermaid stateDiagram-v2
+%% Convention:
+%%   - [*] --> StateName : initial state
+%%   - StateName --> [*] : final state
+%%   - State name: NOUN of state (Active, Closed) - NOT verb (Activating)
+%%   - Transition format: SourceState --> TargetState : event [guard] / action
+
 stateDiagram-v2
-  [*] --> Created
-  Created --> Active: approve
-  Active --> Closed: close
+  [*] --> Initial
+
+  Initial --> Active : approve [credentials valid]
+  Initial --> Rejected : reject [credentials invalid]
+
+  Active --> Suspended : suspend [violation count > 3]
+  Active --> Closed : close
+
+  Suspended --> Active : reactivate / clearViolations()
+  Suspended --> Closed : forceClose [grace period ended]
+
+  Closed --> [*]
+  Rejected --> [*]
+
+  %% Composite state example (uncomment if needed)
+  %% state Active {
+  %%   [*] --> Idle
+  %%   Idle --> Working : startTask
+  %%   Working --> Idle : finishTask
+  %% }

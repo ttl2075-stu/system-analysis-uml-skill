@@ -1,6 +1,19 @@
+%% Activity Diagram - Mermaid flowchart
+%% Convention:
+%%   - Initial node: ([Start])
+%%   - Final node: ([End])
+%%   - Activity: [Action description]
+%%   - Decision: {Condition?}
+%%   - Fork/Join: thanh ngang (Mermaid không có chuẩn, dùng nhãn)
+
 flowchart TD
-  A[Start] --> B{Condition?}
-  B -- Yes --> C[Main Action]
-  B -- No --> D[Alternative Action]
-  C --> E[End]
-  D --> E
+  Start([Start]) --> A[Activity 1]
+  A --> B{Decision?}
+  B -- Yes --> C[Activity 2 - Yes branch]
+  B -- No --> D[Activity 3 - No branch]
+  C --> E{Another decision?}
+  E -- OK --> F[Activity 4]
+  E -- Error --> G[Exception handler]
+  D --> F
+  F --> End([End])
+  G --> End2([Failure End])

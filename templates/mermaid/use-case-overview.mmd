@@ -1,0 +1,23 @@
+%% Use Case Overview - Mermaid workaround (flowchart)
+%% Convention:
+%%   - Actor: round shape (())
+%%   - Use case: rectangle []
+%%   - System boundary: subgraph
+%%   - Include: dotted arrow with label "include"
+%%   - Extend: dotted arrow with label "extend"
+
+flowchart LR
+  subgraph SystemBoundary [System Name]
+    UC1[Use Case 1]
+    UC2[Use Case 2]
+    UC3[Use Case 3]
+    UC4[Common Sub-UC]
+  end
+
+  Actor1((Primary Actor)) --> UC1
+  Actor1 --> UC2
+  Actor2((Secondary Actor)) --> UC3
+
+  UC1 -. include .-> UC4
+  UC2 -. include .-> UC4
+  UC3 -. extend .-> UC1

@@ -1,0 +1,40 @@
+%% Class Diagram - Mermaid classDiagram
+%% Convention:
+%%   - Visibility: + public, - private, # protected, ~ package
+%%   - Multiplicity: "1", "0..1", "*", "1..*"
+%%   - Relationship symbols:
+%%     -- : association
+%%     ..> : dependency
+%%     --|> : generalization (inheritance)
+%%     --o : aggregation
+%%     --* : composition
+%%     ..|> : realization (interface implementation)
+
+classDiagram
+  class EntityA {
+    -id: UUID
+    -name: String
+    -createdAt: DateTime
+    +businessOperation(): Result
+    +query(): List~EntityB~
+  }
+
+  class EntityB {
+    -id: UUID
+    -value: Integer
+    +calculate(): Money
+  }
+
+  class EntityChild {
+    -extraField: String
+    +specialOp(): void
+  }
+
+  class IService {
+    <<interface>>
+    +execute(): void
+  }
+
+  EntityA "1" -- "*" EntityB : has
+  EntityChild --|> EntityA : extends
+  EntityA ..|> IService : implements

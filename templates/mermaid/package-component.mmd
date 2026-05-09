@@ -1,0 +1,42 @@
+%% Package / Component Diagram - Mermaid flowchart workaround
+%% Mermaid không có cú pháp chuẩn cho package và component diagram.
+%% Workaround: dùng flowchart với subgraph cho package, node cho component.
+%% Nếu cần UML chuẩn → dùng PlantUML.
+
+flowchart TB
+  subgraph Presentation [Package: Presentation]
+    WebUI[Web UI Component]
+    MobileApp[Mobile App Component]
+    AdminUI[Admin Console]
+  end
+
+  subgraph BusinessLogic [Package: Business Logic]
+    OrchService[Orchestration Service]
+    DomainService1[Domain Service A]
+    DomainService2[Domain Service B]
+  end
+
+  subgraph DataAccess [Package: Data Access]
+    Repo1[Repository A]
+    Repo2[Repository B]
+    Cache[Cache Layer]
+  end
+
+  subgraph Infrastructure [Package: Infrastructure]
+    DB[(Database)]
+    MQ[(Message Queue)]
+    ExternalAPI[External API Client]
+  end
+
+  WebUI --> OrchService
+  MobileApp --> OrchService
+  AdminUI --> OrchService
+  OrchService --> DomainService1
+  OrchService --> DomainService2
+  DomainService1 --> Repo1
+  DomainService2 --> Repo2
+  Repo1 --> Cache
+  Repo1 --> DB
+  Repo2 --> DB
+  DomainService1 --> MQ
+  DomainService2 --> ExternalAPI

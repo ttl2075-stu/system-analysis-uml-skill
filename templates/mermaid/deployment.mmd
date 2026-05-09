@@ -1,0 +1,41 @@
+%% Deployment Diagram - Mermaid flowchart workaround
+%% Mermaid không có syntax chuẩn cho deployment.
+%% Workaround: dùng flowchart với subgraph cho environment/node.
+%% Nếu cần UML chuẩn → dùng PlantUML.
+
+flowchart TB
+  subgraph Production [Production Environment]
+    subgraph EdgeNode [Edge: CDN + WAF]
+      CDN[CDN]
+      WAF[WAF]
+    end
+
+    subgraph WebNode [Web Tier - 3 instances]
+      LB[Load Balancer]
+      WebApp1[Web App Instance]
+    end
+
+    subgraph AppNode [App Tier - autoscale]
+      AppService1[Application Service]
+      AppService2[Background Worker]
+    end
+
+    subgraph DataNode [Data Tier]
+      DBPrimary[(DB Primary)]
+      DBReplica[(DB Replica - Read)]
+      Redis[(Redis Cache)]
+      MQ[(Message Queue)]
+    end
+
+    Internet((Internet)) --> CDN
+    CDN --> WAF
+    WAF --> LB
+    LB --> WebApp1
+    WebApp1 -- HTTPS --> AppService1
+    AppService1 -- TCP --> DBPrimary
+    AppService1 -- TCP --> Redis
+    AppService1 -- AMQP --> MQ
+    AppService2 -- AMQP --> MQ
+    AppService2 -- TCP --> DBPrimary
+    DBPrimary -. replicate .-> DBReplica
+  end
