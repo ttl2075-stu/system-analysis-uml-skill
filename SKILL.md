@@ -1,4 +1,9 @@
-# SKILL: system-analysis-uml
+---
+name: system-analysis-uml
+description: Analyze and design software systems using a design-first UML/Mermaid workflow. Use for requirements, use case catalogs, domain/activity/state/sequence/component/package/data design, traceability matrices, quality attributes, gap reports, and evidence-first technical documentation reviews or improvements.
+---
+
+# System Analysis UML
 
 ## Purpose
 Chuẩn hóa quy trình để AI Agent phân tích và thiết kế hệ thống theo hướng **design-first**, với ký pháp UML ưu tiên **Mermaid**.
